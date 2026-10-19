@@ -1,21 +1,26 @@
-# Étape 1 : Builder
-FROM node:18-alpine as builder
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-RUN npx prisma generate
-
-# Étape 2 : Runtime
+# Utilise une image Node.js légère
 FROM node:18-alpine
 
+# Définis le répertoire de travail
 WORKDIR /app
-COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
 
+# Copie package.json et package-lock.json (ou yarn.lock)
+COPY package*.json ./
+
+# Installe les dépendances
+RUN npm install
+
+# Copie le reste des fichiers
+COPY . .
+
+# Génère les artefacts Prisma
+RUN npx prisma generate
+
+# Build l'application
+RUN npm run build
+
+# Expose le port
 EXPOSE 5000
+
+# Démarre l'application
 CMD ["npm", "start"]
