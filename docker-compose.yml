@@ -6,8 +6,8 @@ services:
     ports:
       - "5000:5000"
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/ecommerce
-      - JWT_SECRET=ton_secret_jwt_complexe_à_changer
+      - DATABASE_URL=postgresql://equibar_user:2ujy4ZYjhP43euljNWOHbEyyR1Pol6Rs@dpg-dbb7o2k9v7es73af1ksg-a/equibar
+      - JWT_SECRET=HcxWpgISyOP0g+R1z8gRGucDWEmsEtsuUTit1Q6o+tw=
     depends_on:
       - db
 
